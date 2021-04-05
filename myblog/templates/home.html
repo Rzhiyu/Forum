@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if user.is_authenticated %}
+        {#        Hello{{% user.id %}}#}
+    {% endif %}
+    {#    <h1>Category</h1>#}
+    {#    <ul>#}
+    {#        {% for cats in cats_menu %}#}
+    {#            <li>#}
+    {#                <a class="dropdown-item" href="{% url 'category' cats.name|slugify %}">{{ cats.name.title }}</a>#}
+    {#            </li>#}
+    {#        {% endfor %}#}
+    {#    </ul>#}
+    <h1>Posts</h1>
+    <ul>
+        {% for post in object_list %}
+            <li>
+                <small>
+                    <a href="{% url 'article_detail' post.pk %}">{{ post.title }}</a>
+                    By:
+                    {% if post.author.profile.id %}
+                        <a href="{% url 'show_profile_page' post.author.pk %}">{{ post.author.username }}</a>
+                    {% else %}
+                        {{ post.author.username }}
+                    {% endif %}
+                    {{ post.post_date }}
+                    <a class="button" href="{% url 'category' post.category|slugify %}">{{ post.category.title }}</a>
+                    {#                    {% if user.is_authenticated %}#}
+                    {#                        {% if user.id == post.author.id %}#}
+                    {#                            <a class="button" href="{% url 'update_post' post.pk %}">edit</a>#}
+                    {#                            <a class="button" href="{% url 'delete_post' post.pk %}">delete</a>#}
+                    {#                        {% endif %}#}
+                    {#                    {% endif %}#}
+                    <br/>
+                    {{ post.snippet }}
+                    <br/>
+                    <br/>
+                </small>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

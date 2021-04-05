@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}
+    Make a comment...
+{% endblock %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <br/>
+
+        <div class="form-group">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-dark"> Comment!</button>
+            </form>
+        </div>
+{#       发表评论时隐藏id#}
+        <script>
+            var name = "{{ user.username }}";
+            document.getElementById("xxxa").value = name;
+        </script>
+    {% else %}
+        Piss off
+    {% endif %}
+{% endblock %}
