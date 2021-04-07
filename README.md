@@ -12,22 +12,23 @@
 
 3. 转移数据库
 
-  ```bash
-  $ python manage.py makemigrations
-  ```
+	```bash
+	$ python manage.py makemigrations
+	```
 
-  ```bash
-  $ python manage.py migrate
-  ```
+	```bash
+	$ python manage.py migrate
+	```
 
 4. 创建管理员
 
-  ```bash
-  $ python manage.py createsuperuser
-  ```
+	```bash
+	$ python manage.py createsuperuser
+	```
 
 5. 运行
 
-  ```bash
-  $ python manage.py runserver
-  ```
+	```bash
+	$ python manage.py runserver
+	```
+
