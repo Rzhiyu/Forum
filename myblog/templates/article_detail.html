@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load comments_extras %}
+{% load static %}
+{% block title %}
+    {{ post.snippet }}
+{% endblock %}
+<head>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+{% block content %}
+    <body>
+    <style>
+    </style>
+
+    <div>
+        <div>
+            <h5><strong><a href="{% url 'category' post.category.title %}">{{ post.category.title }}</a></strong></h5>
+            <h1>{{ post.title }}<br/></h1>
+            <h3><em>{{ post.snippet }}</em></h3>
+        </div>
+        <div class="card mb-2">
+            <div class="row g-1">
+                <div class="col-md-4">
+                    {% if  post.author.profile.profile_pic %}
+                        <img src="{{ post.author.profile.profile_pic.url }}" class="rounded-circle">
+                    {% else %}
+                        <img src="{% static 'myblog/images/default_profile.png' %}">
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.author.first_name }} {{ post.author.last_name }}</h5>
+                        <p class="small text-muted">
+                            {% if post.author.profile.id %}
+                                <a href="{% url 'show_profile_page' post.author.profile.id %}">Profile Page</a>
+                            {% endif %}
+                            {% if post.author.profile.website_url %}
+                                |  <a href="{{ post.author.profile.website_url }}">Website</a>
+                            {% endif %}
+                            {% if post.author.profile.weibo_url %}
+                                | <a href="{{ post.author.profile.weibo_url }}">Weibo</a>
+                            {% endif %}
+                            {% if post.author.profile.twitter_url %} |
+                                | <a href="{{ post.author.profile.twitter_url }}">Twitter</a>
+                            {% endif %}
+                        </p>
+                        <p class="card-text">{{ post.author.profile.bio }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div>
+            {% if post.header_image %}
+                <img src="{{ post.header_image.url }}"><br/>
+            {% endif %}
+            <small><b>Posted: {{ post.post_date }} | Likes: {{ total_likes }} | Views: {{ post.views }}</b></small><br/>
+            {% block toc %}
+                <div class="widget widget-content">
+                    <h3 class="widget-title">文章目录</h3>
+                    {{ toc | safe }}
+                </div>
+            {% endblock toc %}
+        </div>
+        <div class="container">
+            <pre>{{ body | safe }}</pre>
+        </div>
+    </div>
+    <div align="center">
+        <form action="{% url 'like_post' post.pk %}" method="post">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+                {% if liked %}
+                    <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-danger">Unlike</button>
+                {% else %}
+                    <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-dark"> like</button>
+                {% endif %}
+                <hr>
+            {% else %}
+                <a class="nav-link" href="{% url 'login' %}"> <small>login</small></a>
+                <hr>
+            {% endif %}
+        </form>
+    </div>
+    <h3>发表评论</h3>
+    {% show_comment_form post %}
+    <div class="comment-list-panel">
+        {% show_comments post %}
+        {% if user.is_authenticated %}
+            <script>
+            var name = "{{ user.username }}";
+            document.getElementById("xxxa").value = name;
+
+
+
+
+
+
+
+
+
+
+            </script>
+        {% else %}
+            <script>
+            var name = "热心网友";
+            document.getElementById("xxxa").value = name;
+
+
+
+
+
+
+
+
+
+
+            </script>
+        {% endif %}
+    </div>
+    <div>
+        {% if user.is_authenticated %}
+            {% if user.id == post.author.id %}
+                <a class="btn btn-dark" href="{% url 'update_post' post.pk %}">Edit</a>
+                <a class="btn btn-dark" href="{% url 'delete_post' post.pk %}">Delete</a>
+            {% endif %}
+        {% else %}
+        {% endif %}
+        <a class="btn btn-dark" href="{% url 'home' %}">Back</a>
+        <hr>
+    </div>
+
+    </body>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if user.is_authenticated %}
+        {#        Hello{{% user.id %}}#}
+    {% endif %}
+    {#    <h1>Category</h1>#}
+    {#    <ul>#}
+    {#        {% for cats in cats_menu %}#}
+    {#            <li>#}
+    {#                <a class="dropdown-item" href="{% url 'category' cats.name|slugify %}">{{ cats.name.title }}</a>#}
+    {#            </li>#}
+    {#        {% endfor %}#}
+    {#    </ul>#}
+    <body>
+
+    <div id="demo" class="carousel slide" data-ride="carousel">
+        <!-- 轮播图片 -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://static.runoob.com/images/mix/img_fjords_wide.jpg">
+            </div>
+            <div class="carousel-item">
+                <img src="https://static.runoob.com/images/mix/img_nature_wide.jpg">
+            </div>
+            <div class="carousel-item">
+                <img src="https://static.runoob.com/images/mix/img_mountains_wide.jpg">
+            </div>
+        </div>
+    </div>
+    </body>
+    <body>
+    <hr>
+    <h1>Posts</h1>
+    <ul>
+        {% for post in object_list %}
+            <li>
+                <small>
+                    <a href="{% url 'article_detail' post.pk %}">{{ post.title }}</a>
+                    By:
+                    {% if post.author.profile.id %}
+                        <a href="{% url 'show_profile_page' post.author.profile.id %}">{{ post.author.username }}</a>
+                    {% else %}
+                        {{ post.author.username }}
+                    {% endif %}
+                    {{ post.post_date }}
+                    <a class="button" href="{% url 'category' post.category %}">{{ post.category }}</a>
+                    <small>浏览量：{{ post.views }} 点赞数：{{ post.total_like }} 评论量：{{ post.comment_set.count }} </small>
+                    {#                    {% if user.is_authenticated %}#}
+                    {#                        {% if user.id == post.author.id %}#}
+                    {#                            <a class="button" href="{% url 'update_post' post.pk %}">edit</a>#}
+                    {#                            <a class="button" href="{% url 'delete_post' post.pk %}">delete</a>#}
+                    {#                        {% endif %}#}
+                    {#                    {% endif %}#}
+                    <br/>
+                    {{ post.snippet }}
+                    <br/>
+                    <br/>
+                </small>
+            </li>
+        {% endfor %}
+    </ul>
+    </body>
+{% endblock %}
