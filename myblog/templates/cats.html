@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}
+    {% if post_list %}
+    {% else %}
+        No Content
+    {% endif %}
+{% endblock %}
+{% block content %}
+    {% if post_list %}
+        {% for post in post_list %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h4 class="card-title"><a href="{% url 'article_detail' post.pk %}">{{ post.title }}</a></h4>
+                    <p class="card-text">{% if post.author.profile.id %}
+                        <a href="{% url 'show_profile_page' post.author.profile.id %}">{{ post.author.username }}</a>
+                    {% else %}
+                        {{ post.author.username }}
+                    {% endif %}</p>
+                    <p class="card-text">{{ post.snippet }}</p>
+                    <p class="card-text"><small class="text-muted">{{ post.modified_date }} 浏览量：{{ post.views }}
+                        点赞数：{{ post.total_like }}
+                        评论量：{{ post.comment_set.count }}</small></p>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h1>No Content</h1>
+    {% endif %}
+{% endblock %}

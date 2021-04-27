@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h1>User Profile</h1>
+    <div class="card mb-2">
+        <div class="row g-1">
+            <div class="col-md-4">
+                {% if  page_user.profile_pic %}
+                    <img src="{{ page_user.profile_pic.url }}" class="rounded-circle">
+                {% else %}
+                    <img src="{% static 'myblog/images/default_profile.png' %}">
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ page_user.user.first_name }} {{ page_user.user.last_name }}</h5>
+                    <p class="small text-muted">
+                        <a href="{% url 'show_profile_page' page_user.id %}">Profile Page</a>
+                        {% if page_user.website_url %}
+                            |  <a href="{{ page_user.website_url }}">Website</a>
+                        {% endif %}
+                        {% if page_user.weibo_url %}
+                            | <a href="{{ page_user.weibo_url }}">Weibo</a>
+                        {% endif %}
+                        {% if page_user.twitter_url %}
+                            | <a href="{{ page_user.twitter_url }}">Twitter</a>
+                        {% endif %}
+                    </p>
+                    <p class="card-text">{{ page_user.bio }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <h1>Following is Posts from the author</h1>
+    <br/>
+    <div>
+        <ul>
+            {% for post in posts %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <a href="{% url 'article_detail' post.pk %}"><h4 class="card-title">{{ post.title }}</h4></a>
+
+                        <p class="card-text">{% if post.author.profile.id %}
+                            <a href="{% url 'show_profile_page' post.author.profile.id %}">{{ post.author.username }}</a>
+                        {% else %}
+                            {{ post.author.username }}
+                        {% endif %}</p>
+                        <p class="card-text">{{ post.snippet }}</p>
+                        <p class="card-text"><small class="text-muted">{{ post.modified_date }} 浏览量：{{ post.views }}
+                            点赞数：{{ post.total_like }}
+                            评论量：{{ post.comment_set.count }}</small></p>
+                    </div>
+                </div>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

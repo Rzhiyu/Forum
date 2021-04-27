@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+    <body>
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <div>
+                    {% if category_list %}
+                        <h1>Category</h1>
+                        <ol class="list-group list-group-numbered">
+                            {% for cats in category_list %}
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold"></div>
+                                        <a class="dropdown-item" href="{% url 'cats' cats.pk %}">{{ cats.name }}</a>
+                                    </div>
+                                    <span class="badge bg-primary rounded-pill">{{ cats.posts_num }}</span>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    {% else %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-9">
+                <div>
+                    <h1>Hot Posts💥</h1>
+                    <div>
+                        {% for post in post_list %}
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <a href="{% url 'article_detail' post.pk %}"><h4
+                                            class="card-title">{{ post.title }}</h4>
+                                    </a>
+
+                                    <p class="card-text">{% if post.author.profile.id %}
+                                        🖊
+                                        <a href="{% url 'show_profile_page' post.author.profile.id %}">{{ post.author.username }}</a>
+                                    {% else %}
+                                        {{ post.author.username }}
+                                    {% endif %}</p>
+                                    <p class="card-text">{{ post.snippet }}</p>
+                                    <p class="card-text"><small class="text-muted">updated: {{ post.modified_date }}
+                                        👀 {{ post.views }}
+                                        👍 {{ post.total_like }}
+                                        👄 {{ post.comment_set.count }}</small></p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+{% endblock %}
