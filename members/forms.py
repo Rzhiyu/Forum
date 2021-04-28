@@ -38,11 +38,11 @@ class EditProfileForm(UserChangeForm):
 
 class PasswordChangingForm(PasswordChangeForm):
     old_password = forms.CharField(max_length=100,
-                                   widget=forms.PasswordInput(attrs={'class': 'form-control', 'tpye': 'password'}))
+                                   widget=forms.PasswordInput(attrs={'class': 'form-control', 'type': 'password'}))
     new_password1 = forms.CharField(max_length=100,
-                                    widget=forms.PasswordInput(attrs={'class': 'form-control', 'tpye': 'password'}))
+                                    widget=forms.PasswordInput(attrs={'class': 'form-control', 'type': 'password'}))
     new_password2 = forms.CharField(max_length=100,
-                                    widget=forms.PasswordInput(attrs={'class': 'form-control', 'tpye': 'password'}))
+                                    widget=forms.PasswordInput(attrs={'class': 'form-control', 'type': 'password'}))
 
     class Meta:
         model = User
@@ -55,8 +55,7 @@ class ProfilePageForm(forms.ModelForm):
         fields = ('bio', 'profile_pic', 'website_url', 'weibo_url', 'twitter_url')
         widgets = {
             'bio': forms.Textarea(attrs={'class': 'form-control'}),
-            # 'profile_pic': forms.TextInput(attrs={'class': 'form-control'}),
-            'website_url': forms.TextInput(attrs={'class': 'form-control'}),
-            'weibo_url': forms.TextInput(attrs={'class': 'form-control'}),
-            'twitter_url': forms.TextInput(attrs={'class': 'form-control'}),
+            'website_url': forms.URLInput(attrs={'class': 'form-control'}),
+            'weibo_url': forms.URLInput(attrs={'class': 'form-control'}),
+            'twitter_url': forms.URLInput(attrs={'class': 'form-control'}),
         }

@@ -2,6 +2,7 @@
 {% block title %}
     Edit Profile Page
 {% endblock %}
+<base href="/">
 {% block content %}
     {% if user.is_authenticated %}
         {% if user.id == profile.user.id %}
@@ -11,6 +12,7 @@
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_p }}
+                    {{ form.media }}
                     <button class="btn btn-dark">Edit Profile</button>
                 </form>
             </div>

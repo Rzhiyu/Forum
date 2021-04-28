@@ -7,9 +7,10 @@
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
+            {{ form.media }}
             <a href="{% url 'home' %}">
                 <button class="btn btn-dark">Confirm</button>
-                </a>
+            </a>
         </form>
     </div>
 

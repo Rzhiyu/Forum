@@ -24,10 +24,9 @@
                     <div class="row g-1">
                         <div class="col-md-4">
                             {% if post.author.profile.profile_pic %}
-                                <img src="{{ post.author.profile.profile_pic.url }}"
-                                     style="max-width: 150px; border-radius: 15%;" class="rounded-circle">
+                                <img src="{{ post.author.profile.profile_pic.url }}" class="img-fluid">
                             {% else %}
-                                <img src="{% static 'myblog/images/default_profile.png' %}">
+                                <img src="{% static 'myblog/images/default_profile.png' %}" class="img-fluid">
                             {% endif %}
                         </div>
                         <div class="col-md-8">
@@ -52,9 +51,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-9">
+                <div>
                     {% if post.header_image %}
-                        <img src="{{ post.header_image.url }}" style="max-width: 1000px;"><br/>
+                        <img src="{{ post.header_image.url }}" class="img-fluid" style="width: 100%"><br/>
                     {% endif %}
                     <small><b>Posted: {{ post.post_date }} | Likes: {{ total_likes }} |
                         Views: {{ post.views }}</b></small><br/>
@@ -68,12 +67,12 @@
                         {% endif %}
                 </div>
             </div>
-            {% if toc %}
-                <div class="col-3 mt-4">
-                    <h4 class="widget-title">Menu</h4>
-                    {{ toc | safe }}
-                </div>
-            {% endif %}
+                {% if toc %}
+                    <div class="col-3 mt-4">
+                        <h4 class="widget-title">Menu</h4>
+                        {{ toc | safe }}
+                    </div>
+                {% endif %}
         </div>
     </div>
     <div>

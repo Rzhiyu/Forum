@@ -9,9 +9,21 @@
     <div class="form-group">
         <form method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button class="btn btn-dark"> Login</button>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" name="username" autofocus autocapitalize="none"
+                       autocomplete="username" maxlength="150" required id="id_username">
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" autocomplete="current-password" required
+                       id="id_password">
+                <div id="emailHelp" class="form-text">We'll never share your password with anyone else.</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+    </div>
     </div>
 
 {% endblock %}
