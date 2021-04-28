@@ -24,9 +24,9 @@
                     <div class="row g-1">
                         <div class="col-md-4">
                             {% if post.author.profile.profile_pic %}
-                                <img src="{{ post.author.profile.profile_pic.url }}" class="img-fluid">
+                                <img src="{{ post.author.profile.profile_pic.url }}" class="rounded-circle">
                             {% else %}
-                                <img src="{% static 'myblog/images/default_profile.png' %}" class="img-fluid">
+                                <img src="{% static 'myblog/images/default_profile.png' %}" class="rounded-circle"
                             {% endif %}
                         </div>
                         <div class="col-md-8">

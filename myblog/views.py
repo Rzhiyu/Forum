@@ -12,7 +12,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from markdown.extensions.toc import TocExtension
 
 from .forms import PostForm, EditForm, CatForm
-from .models import Post, Category
+from .models import Post, Category, User
 
 
 class HomeView(ListView):
@@ -24,6 +24,8 @@ class HomeView(ListView):
         context = super(HomeView, self).get_context_data(*args, **kwargs)
         category_list = Category.objects.annotate(posts_num=Count('post')).order_by('-posts_num')
         context['category_list'] = category_list
+        post_list = Post.objects.all()
+        context['post_list'] = post_list
         return context
 
 
@@ -117,3 +119,4 @@ def search(request):
     post_list = Post.objects.filter(Q(title__icontains=q) | Q(body__icontains=q) | Q(author__username__icontains=q))
     messages.add_message(request, messages.SUCCESS, "φ(゜▽゜*)♪", extra_tags='success')
     return render(request, 'home.html', {'post_list': post_list})
+
